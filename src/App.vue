@@ -12,14 +12,13 @@
           </div>
       </Header>
       <a-Layout>
-        <Live2d :modelData="mdata"
-        :on-move="handleMove" />
+        <vue-live2d :modelPath="modelpath"></vue-live2d>
         <router-view></router-view>
       </a-Layout>
       <Footer id="footer">footer</Footer>
       <vue-canvas-nest :config="{count: 88, opacity: 1}" ></vue-canvas-nest>
-    </a-Layout>
-  </div>
+    </a-Layout>  
+  </div> 
 </template>
 
 <script>
@@ -29,19 +28,16 @@ export default {
   name: 'App',
   data () {
     return {
+      collapsed: false,
       welcomeMessage: 'Welcome!Traveller',
       date: new Date(),
-      mdata: {
-        name: "wanko", // 模型名称
-        model: "./static/live2dw/live2d-widget-model-wanko/assets/moc/wanko.moc", // 模型文件地址
-        textures: [
-             "./static/live2dw/live2d-widget-model-wanko/assets/moc/wanko.1024/texture_00.png", // 材质素材地址
-        ],
-        hit_areas:[{"name":"body","id":"D_REF.PT_SOBA_01"}],
-        layout:{"center_x":0,"y":1.8,"width":2.9},
-        motions:{"idle":[{"file":"./static/live2dw/live2d-widget-model-wanko/assets/mtn/idle_01.mtn","fade_in":500,"fade_out":200},{"file":"./static/live2dw/live2d-widget-model-wanko/assets/mtn/idle_02.mtn","fade_in":500,"fade_out":200},{"file":"./static/live2dw/live2d-widget-model-wanko/assets/mtn/idle_03.mtn","fade_in":500,"fade_out":200},{"file":"./static/live2dw/live2d-widget-model-wanko/assets/mtn/idle_04.mtn","fade_in":500,"fade_out":200}],"shake":[{"file":"./static/live2dw/live2d-widget-model-wanko/assets/mtn/shake_01.mtn","fade_in":500,"fade_out":0},{"file":"./static/live2dw/live2d-widget-model-wanko/assets/mtn/shake_02.mtn","fade_in":500,"fade_out":0}],"tap_body":[{"file":"./static/live2dw/live2d-widget-model-wanko/assets/mtn/touch_01.mtn","fade_in":500,"fade_out":0},{"file":"./static/live2dw/live2d-widget-model-wanko/assets/mtn/touch_02.mtn","fade_in":500,"fade_out":0},{"file":"./static/live2dw/live2d-widget-model-wanko/assets/mtn/touch_03.mtn","fade_in":500,"fade_out":0}]}
-        },
-        handleMove: function(){},
+      modelpath: [
+        {
+        order: 1,
+        path: "static/live2dw/live2d-widget-model-wanko/assets/wanko.model.json",
+        isScale: false
+        }
+      ]
     }
   },
   components: { vueCanvasNest },
@@ -103,5 +99,12 @@ export default {
 }
 #footer{
   bottom: 0px;
+}
+#components-layout-demo-top-side-2 .logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255,255,255,.2);
+  margin: 16px 28px 16px 0;
+  float: left;
 }
 </style>
