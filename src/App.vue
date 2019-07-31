@@ -1,24 +1,57 @@
 <template>
   <div id="app">
-    <a-Layout>
-       <Header id="basic-header">
-          <div id="WelcomeMessage">
-            {{welcomeMessage}}
-          </div>
+      <Header id="basic-header">
+        <div id="WelcomeMessage">
+          {{welcomeMessage}}
+        </div>
           <div id="Timeboard">
             <div id="time">
               {{date}}
             </div>
           </div>
       </Header>
-      <a-Layout>
-        <vue-live2d :modelPath="modelpath"></vue-live2d>
+      <div id="content">
+        <div id="navi">
+          <a-button type="primary" @click="toggleCollapsed" style="margin-bottom: 16px">
+            <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
+          </a-button>
+          <a-menu
+            :defaultSelectedKeys="['1']"
+            :defaultOpenKeys="['sub1']"
+            mode="inline"
+            theme="dark"
+            :inlineCollapsed="collapsed"
+          >
+            <a-menu-item key="1">
+              <a-icon type="pie-chart" />
+              <span>Clickgame</span>
+              <router-link to="/clickgame"></router-link>
+            </a-menu-item>
+            <a-menu-item key="2">
+              <a-icon type="desktop" />
+              <span>Option 2</span>
+            </a-menu-item>
+            <a-menu-item key="3">
+              <a-icon type="inbox" />
+              <span>Option 3</span>
+            </a-menu-item>
+          </a-menu>
+      </div>
+      <div id="router">
         <router-view></router-view>
-      </a-Layout>
-      <Footer id="footer">footer</Footer>
+      </div>
+      </div>
+      <vue-live2d :modelPath="modelpath" :width="live2dwidth" :height="live2dheight"></vue-live2d>
       <vue-canvas-nest :config="{count: 88, opacity: 1}" ></vue-canvas-nest>
-    </a-Layout>  
-  </div> 
+      <div class="basic-footer">
+        <footer>
+          Jim
+          <br>
+          2019
+          </footer>
+      </div>
+      
+  </div>
 </template>
 
 <script>
@@ -29,16 +62,24 @@ export default {
   data () {
     return {
       collapsed: false,
-      welcomeMessage: 'Welcome!Traveller',
+      welcomeMessage: '          Welcome!Traveller',
       date: new Date(),
+      live2dwidth: 222,
+      live2dheight: 222,
       modelpath: [
         {
         order: 1,
         path: "static/live2dw/live2d-widget-model-wanko/assets/wanko.model.json",
-        isScale: false
+        isScale: false,
+        isMove: true,
         }
       ]
     }
+  },
+  methods: {
+    toggleCollapsed () {
+      this.collapsed = !this.collapsed
+    },
   },
   components: { vueCanvasNest },
   mounted () {
@@ -53,6 +94,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style>
@@ -66,6 +108,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  width: 100%;
+  height: 100%
 }
 #basic-header{
   background-color: #24292e;
@@ -73,7 +117,7 @@ export default {
   line-height: 2;
   padding: 16px;
   z-index: 32;
-  height: 80px;
+  height: 10%;
 }
 #Timeboard{
   width: 25%;
@@ -97,14 +141,28 @@ export default {
   height:100%;
   width:100%;
 }
-#footer{
-  bottom: 0px;
+#content{
+  height: 85%;
+  width: 100%;
 }
-#components-layout-demo-top-side-2 .logo {
-  width: 120px;
-  height: 31px;
-  background: rgba(255,255,255,.2);
-  margin: 16px 28px 16px 0;
+#navi{
+  width: 200px;
+  height: 85%;
+  float:left;
+}
+#router{
+  border-bottom:1px #020202 dotted;
+  width: 85%;
+  height: 100%;
   float: left;
+}
+#basic-footer{
+    left:0;
+    right:0;
+    height:10%;
+    width:100%;
+    bottom:0;
+    position :relative;
+    text-align: center;
 }
 </style>

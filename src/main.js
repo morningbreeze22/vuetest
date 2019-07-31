@@ -5,6 +5,10 @@ import App from './App'
 import router from './router'
 import Antd from 'ant-design-vue'
 import Vuelive2d from 'vue-live2d-model'
+import "ant-design-vue/dist/antd.css"
+import $ from 'jquery';
+window.jQuery = $;
+window.$ = $;
 Vue.config.productionTip = false
 Vue.use(Antd)
 Vue.use(Vuelive2d)
