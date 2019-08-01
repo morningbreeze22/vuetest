@@ -7,6 +7,7 @@ import Antd from 'ant-design-vue'
 import Vuelive2d from 'vue-live2d-model'
 import "ant-design-vue/dist/antd.css"
 import $ from 'jquery';
+import "./assets/style/animate.css"
 window.jQuery = $;
 window.$ = $;
 Vue.config.productionTip = false

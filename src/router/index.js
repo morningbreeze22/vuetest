@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Clickgame from '@/components/Clickgame'
 import Game from '@/components/Game'
+import Start from '@/components/Start'
 Vue.use(Router)
 
 export default new Router({
@@ -20,12 +21,14 @@ export default new Router({
     {
       path: '/game',
       name: 'Game',
-      component: Game
-    },
-    {
-      path: '/start',
-      name: 'Start',
-      component: Start
+      component: Game,
+      children: [
+         {
+            path: 'start',
+            name: 'Start',
+            component: Start
+          }
+      ]
     }
   ]
 })
