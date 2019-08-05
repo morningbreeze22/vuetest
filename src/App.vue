@@ -45,7 +45,8 @@
       <vue-canvas-nest :config="{count: 88, opacity: 1}" ></vue-canvas-nest>
       <div class="basic-footer">
         <footer>
-          Jim
+          <a-divider>Designed by</a-divider>
+          <p>Jim</p>
           <br>
           2019
           </footer>
@@ -151,7 +152,6 @@ export default {
   float:left;
 }
 #router{
-  border-bottom:1px #020202 dotted;
   width: 85%;
   height: 100%;
   float: left;
