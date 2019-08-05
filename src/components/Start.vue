@@ -14,6 +14,7 @@
 
                 <div id="clickarea" v-show="gamestart">
                     <img src="../assets/gameresources/human.png" hidden="hidden" id="humanimg">
+                    <img src="../assets/gameresources/hit.png" hidden="hidden" id="boomimg">
                     <canvas id="can1" height="550" width="1200" v-on:click="hit($event)"></canvas>
                 </div>
                 <div id="score" v-show="gamestart">
@@ -28,6 +29,7 @@ var interval;
 var interval2;
 var humanwidth=70;
 var humanheight=100;
+var humanscore=100;
 var a=new Array();
 import { setInterval, clearInterval } from 'timers';
 export default {
@@ -45,11 +47,23 @@ export default {
             var x=($event).clientX;
             var y=($event).clientY;
             var can1=document.getElementById("can1");
-            can1.style.cursor= "url('/static/clickgame/hit2.png'),crosshair";
-            var timeout1=window.setTimeout(function() {
-                can1.style.cursor="crosshair";
-            },50);
-            console.log(x);
+            var ctx=can1.getContext("2d");
+            var img_h=document.getElementById("humanimg");
+            var img_b=document.getElementById("boomimg");
+            var cx=x-can1.getBoundingClientRect().left+40;  //计算canvas内的坐标
+            var cy=y-can1.getBoundingClientRect().top+40;
+            //ctx.fillRect(cx,cy,humanwidth,humanheight);
+            var index=isScored(cx,cy);
+            if(index!=-1){
+                var m=a[index][0];
+                var n=a[index][1];
+                ctx.drawImage(img_b,m,n,humanwidth,humanheight);
+                this.score=this.score+humanscore;
+                var timeout2=window.setTimeout(function() {
+                    ctx.clearRect(m,n,humanwidth,humanheight);
+                    a.splice(index,1);
+                },300);
+            }
         }
 
     },
@@ -74,13 +88,18 @@ export default {
             _this.gamestart=true;
             var img=document.getElementById("humanimg");
             interval2=setInterval(function(){
-                var x=randomNum(35,1150);
-                var y=randomNum(50,500);
+                var x=randomNum(35,1000);
+                var y=randomNum(50,450);
                 if(isnotOverlap(x,y)){
                     ctx.drawImage(img,x,y,humanwidth,humanheight);
                     a.push([x,y]);
+                    if(a.length>5){
+                        window.setTimeout(function(){
+                            var b=a.shift();
+                            ctx.clearRect(b[0],b[1],humanwidth,humanheight);
+                        },3000);
+                    }
                 }
-                
             },500);
             
             
@@ -120,6 +139,19 @@ function isnotOverlap(x,y){
         }
     }
     return true;
+}
+
+function isScored(x,y){
+    console.log(a);
+    var m,n;
+    for(var i=0;i<a.length;i++){
+        m=a[i][0];
+        n=a[i][1];
+        if( (x-m)<humanwidth && (x-m)>0 && (y-n)<humanheight && (y-n)>0 ){
+            return i;
+        }
+    }
+    return -1;
 }
 
 </script>
@@ -210,6 +242,7 @@ function isnotOverlap(x,y){
     margin-left: 50px;
     margin-right: 50px;
     border: 2px solid black;
+    cursor: url('/static/clickgame/aim.png'),crosshair
 }
 
 
