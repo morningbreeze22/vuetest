@@ -47,8 +47,7 @@
         <footer>
           <a-divider>Designed by</a-divider>
           <p>Jim</p>
-          <br>
-          2019
+          <p>2019</p>
           </footer>
       </div>
       

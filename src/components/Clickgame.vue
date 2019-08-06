@@ -41,7 +41,7 @@ export default {
   padding: 40px;
   height:700px;
   width:1440px;
-  margin: 0px;
+  margin-left: 50px;
   background: url("../assets/clickgame-bg3.png") no-repeat;
   background-size:100% 100%;
   position:relative;

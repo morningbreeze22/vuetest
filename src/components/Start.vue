@@ -15,10 +15,16 @@
                 <div id="clickarea" v-show="gamestart">
                     <img src="../assets/gameresources/human.png" hidden="hidden" id="humanimg">
                     <img src="../assets/gameresources/hit.png" hidden="hidden" id="boomimg">
-                    <canvas id="can1" height="550" width="1200" v-on:click="hit($event)"></canvas>
+                    <canvas id="can1" height="550" width="1200" v-on:click="hit"></canvas>
                 </div>
                 <div id="score" v-show="gamestart">
-                    <h2> SCORED: {{score}} </h2>
+                    <div id="countscorediv">
+                        <span style="font-size:36px"> SCORED: {{score}} </span> 
+                    </div>
+                    <div id="addscorediv"></div>
+                    <!-- 子组件无法达成此效果
+                    <slide-text v-bind:msg="addscore" v-bind:showslide="plusvisible" ></slide-text>
+                    -->
                 </div>
         </div>
 </template>
@@ -32,6 +38,8 @@ var humanheight=100;
 var humanscore=100;
 var a=new Array();
 import { setInterval, clearInterval } from 'timers';
+import SlideText from './SlideText'
+let lodash = require('lodash')
 export default {
     name: "Start",
     data () {
@@ -39,11 +47,13 @@ export default {
             number: 3,
             iscountdown: true,
             gamestart: false,
-            score: 0
+            score: 0,
+            addscore: 0,
+            //plusvisible: false
         }
     },
     methods:{
-        hit ($event) {
+        hit: lodash.throttle(function ($event) {
             var x=($event).clientX;
             var y=($event).clientY;
             var can1=document.getElementById("can1");
@@ -52,6 +62,9 @@ export default {
             var img_b=document.getElementById("boomimg");
             var cx=x-can1.getBoundingClientRect().left+40;  //计算canvas内的坐标
             var cy=y-can1.getBoundingClientRect().top+40;
+            //var adds=document.getElementById("addscore");
+            var scoreboard=document.getElementById("score");
+            //adds.classList.add("animated");
             //ctx.fillRect(cx,cy,humanwidth,humanheight);
             var index=isScored(cx,cy);
             if(index!=-1){
@@ -59,13 +72,23 @@ export default {
                 var n=a[index][1];
                 ctx.drawImage(img_b,m,n,humanwidth,humanheight);
                 this.score=this.score+humanscore;
+                this.addscore=humanscore;
+                this.plusvisible=true;
+                //this.$store.commit("setScore",humanscore);
+                //this.$store.commit("setState",true);
+
+                var d=document.getElementById("addscorediv");
+                d.innerHTML= "<p style='font-size:24px' class='animated slideInUp slideOutUp'> +100 </p>";
+
                 var timeout2=window.setTimeout(function() {
                     ctx.clearRect(m,n,humanwidth,humanheight);
                     a.splice(index,1);
-                },300);
+                },10);
             }
-        }
-
+        },50)
+    },
+    components:{
+        SlideText
     },
     mounted () {
         let _this=this;
@@ -115,6 +138,8 @@ export default {
   }
 }
 
+
+//随机数
 function randomNum(minNum,maxNum){ 
     switch(arguments.length){ 
         case 1: 
@@ -129,6 +154,7 @@ function randomNum(minNum,maxNum){
     } 
 }
 
+//判断不重叠
 function isnotOverlap(x,y){
     var m,n;
     for(var i=0;i<a.length;i++){
@@ -141,6 +167,7 @@ function isnotOverlap(x,y){
     return true;
 }
 
+//判断命中
 function isScored(x,y){
     console.log(a);
     var m,n;
@@ -244,7 +271,14 @@ function isScored(x,y){
     border: 2px solid black;
     cursor: url('/static/clickgame/aim.png'),crosshair
 }
-
+#addscorediv{
+    float:left;
+}
+#countscorediv{
+    text-align: right;
+    width:50%;
+    float:left;
+}
 
 @-webkit-keyframes circle_right{
     0%{
