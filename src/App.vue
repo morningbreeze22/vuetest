@@ -16,7 +16,7 @@
             <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
           </a-button>
           <a-menu
-            :defaultSelectedKeys="['1']"
+            :defaultSelectedKeys="['2']"
             :defaultOpenKeys="['sub1']"
             mode="inline"
             theme="dark"
@@ -29,7 +29,8 @@
             </a-menu-item>
             <a-menu-item key="2">
               <a-icon type="desktop" />
-              <span>Option 2</span>
+              <span>Login</span>
+              <router-link to="/user/login"></router-link>
             </a-menu-item>
             <a-menu-item key="3">
               <a-icon type="inbox" />

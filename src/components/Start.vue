@@ -83,7 +83,7 @@ export default {
                 var timeout2=window.setTimeout(function() {
                     ctx.clearRect(m,n,humanwidth,humanheight);
                     a.splice(index,1);
-                },10);
+                },20);
             }
         },50)
     },

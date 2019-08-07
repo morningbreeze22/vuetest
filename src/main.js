@@ -9,7 +9,6 @@ import Vuelive2d from 'vue-live2d-model'
 import "ant-design-vue/dist/antd.css"
 import $ from 'jquery';
 import "./assets/style/animate.css"
-import store from './store/store.js'
 window.jQuery = $;
 window.$ = $;
 Vue.config.productionTip = false
@@ -20,7 +19,6 @@ Vue.use(Vuex)
 new Vue({
   el: '#app',
   router,
-  store,
   components: { App },
   template: '<App/>'
 })
