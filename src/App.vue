@@ -11,8 +11,8 @@
           </div>
       </Header>
       <div id="content">
-        <div id="navi">
-          <a-button type="primary" @click="toggleCollapsed" style="margin-bottom: 16px">
+        <div id="navi" @mouseenter="showmenu" @mouseleave="hidemenu">
+          <a-button id="menubtn" type="primary" @click="toggleCollapsed" style="margin-bottom: 16px">
             <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
           </a-button>
           <a-menu
@@ -78,9 +78,15 @@ export default {
     }
   },
   methods: {
+    showmenu () {
+      this.collapsed= false;
+    },
+    hidemenu () {
+      this.collapsed= true;
+    },
     toggleCollapsed () {
       this.collapsed = !this.collapsed
-    },
+    }
   },
   components: { vueCanvasNest },
   mounted () {

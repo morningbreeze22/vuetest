@@ -1,17 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+/*import HelloWorld from '@/components/HelloWorld'
 import Clickgame from '@/components/Clickgame'
 import Game from '@/components/Game'
 import Start from '@/components/Start'
 import UserLayout from '@/components/UserLayout'
 import Login from '@/components/user/Login'
 import Register from '@/components/user/Register'
-import RegisterResult from '@/components/user/RegisterResult'
+import RegisterResult from '@/components/user/RegisterResult'*/
+
+import { constantRouterMap } from '@/config/router.config'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
+  routes: constantRouterMap
+  /*[
     {
       path: '/',
       name: 'Login',
@@ -56,5 +59,5 @@ export default new Router({
         }
       ]
     }
-  ]
+  ]*/
 })
