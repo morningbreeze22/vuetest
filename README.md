@@ -1,6 +1,7 @@
 # vuetest
 
-> A Vue.js project
+> A Vue.js project with a simple click game with some animation and live2d. Login part is buggy.
+> See https://seventh-acronym-327706.wl.r.appspot.com/
 
 ## Build Setup
 
